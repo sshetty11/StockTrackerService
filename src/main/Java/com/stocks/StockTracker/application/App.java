@@ -2,6 +2,7 @@ package com.stocks.StockTracker.application;
 
 import io.dropwizard.setup.Environment;
 
+import java.io.FileNotFoundException;
 
 import io.dropwizard.Application;
 
@@ -16,11 +17,12 @@ public class App extends Application<StockConfig>
 		new App().run(args);
 	}
 	@Override
-	public void run(StockConfig config,Environment env) throws ClassNotFoundException{
+	public void run(StockConfig config,Environment env) throws ClassNotFoundException, FileNotFoundException{
+		StockInput.initialize(config.getDataInput());
 		final StockService stockService = new StockService();
 		env.jersey().register(stockService);
-		//jdbi.registerArgumentFactory(new ListArgumentFactory());
-
+		System.out.println(config.getDataInput());
+		
 
 	}
 }
